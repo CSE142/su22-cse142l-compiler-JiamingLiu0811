@@ -18,15 +18,17 @@ START_C
 
 uint64_t sum_of_locations_solution(uint64_t *search_space, uint32_t search_space_size, uint64_t* queries, uint32_t query_count)
 {
-	uint64_t r = 0;
-
+    std::unordered_set<uint64_t> mySet;
+    for(uint32_t j = 0; j < search_space_size; j++){
+        mySet.insert(search_space[j]);
+    }
+    uint32_t r = 0;
+    std::sort(search_space, &search_space[search_space_size]);
 	for(uint32_t i = 0; i < query_count; i++) {
-		for(uint32_t j = 0; j < search_space_size; j++) {
-			if (search_space[j] == queries[i]) {
-				r += i;
-				break;
-			}
-		}
+        std::unordered_set<uint64_t>::const_iterator it = mySet.find (queries[i]);
+        if ( it != mySet.end() ){
+            r += i;
+        }
 	}
 	return r;
 }
